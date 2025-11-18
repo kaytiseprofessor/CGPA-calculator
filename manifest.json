@@ -1,0 +1,16 @@
+{
+  "name": "NU CGPA Genius",
+  "short_name": "NU CGPA",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#047857",
+  "description": "A modern CGPA calculator for National University Bangladesh.",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/10009/10009377.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
