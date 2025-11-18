@@ -34,3 +34,14 @@ export interface SavedCalculation {
   dept?: string;
   year?: string;
 }
+
+export interface NuStudentInfo {
+  name: string;
+  fatherName: string;
+  motherName: string;
+  college: string;
+  roll: string;
+  reg: string;
+  session: string;
+  cgpa?: string;
+}

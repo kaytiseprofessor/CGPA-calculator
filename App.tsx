@@ -9,14 +9,13 @@ import SyllabusSelector from './components/SyllabusSelector';
 import { Term, CalculationResult, SavedCalculation } from './types';
 import { DEFAULT_CREDITS, INITIAL_TERM_NAME } from './constants';
 import { DEPARTMENTS } from './data/syllabus';
+import { generateId } from './utils';
 
 // Lazy load secondary components for performance
 const GradeScaleTable = React.lazy(() => import('./components/GradeScaleTable'));
 const SavedResults = React.lazy(() => import('./components/SavedResults'));
 const SaveModal = React.lazy(() => import('./components/SaveModal'));
-
-// Helper for generating IDs
-const generateId = () => Math.random().toString(36).substr(2, 9);
+const ResultSearchModal = React.lazy(() => import('./components/ResultSearchModal'));
 
 const App: React.FC = () => {
   // App State
@@ -36,10 +35,13 @@ const App: React.FC = () => {
   const [selectedSyllabusDept, setSelectedSyllabusDept] = useState<string>("");
   const [isScaleModalOpen, setScaleModalOpen] = useState(false);
   const [isSaveModalOpen, setSaveModalOpen] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
+  
+  // DEFAULT TO DARK MODE (true)
+  const [darkMode, setDarkMode] = useState(true);
   const [savedCalculations, setSavedCalculations] = useState<SavedCalculation[]>([]);
 
-  // Load saved data
+  // Load saved data & Theme
   useEffect(() => {
     const stored = localStorage.getItem('nu-cgpa-saved');
     if (stored) {
@@ -50,9 +52,13 @@ const App: React.FC = () => {
       }
     }
     
-    // Check system preference for dark mode
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      setDarkMode(true);
+    // Logic for persisting theme preference
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme) {
+        setDarkMode(savedTheme === 'dark');
+    } else {
+        // If no preference, default to true (Dark)
+        setDarkMode(true);
     }
   }, []);
 
@@ -60,6 +66,18 @@ const App: React.FC = () => {
   useEffect(() => {
     localStorage.setItem('nu-cgpa-saved', JSON.stringify(savedCalculations));
   }, [savedCalculations]);
+
+  // Persist Theme
+  useEffect(() => {
+    const html = document.documentElement;
+    if (darkMode) {
+        html.classList.add('dark');
+        localStorage.setItem('theme', 'dark');
+    } else {
+        html.classList.remove('dark');
+        localStorage.setItem('theme', 'light');
+    }
+  }, [darkMode]);
 
   // Calculate results automatically
   const result: CalculationResult = useMemo(() => {
@@ -88,13 +106,11 @@ const App: React.FC = () => {
       const deptData = DEPARTMENTS[selectedSyllabusDept];
       const yearKeys = Object.keys(deptData.years);
       
-      // Logic: simple index-based prediction. 
-      // If current length is 1, we assume we want the 2nd item in the syllabus list.
       const nextIndex = terms.length; 
       
       if (yearKeys[nextIndex]) {
         const key = yearKeys[nextIndex];
-        nextTermName = key; // e.g., "2nd Year" or "2nd Year - 1st Semester"
+        nextTermName = key; 
         syllabusCourses = deptData.years[key];
       }
     }
@@ -139,6 +155,10 @@ const App: React.FC = () => {
     setTerms([newTerm]);
   }, []);
 
+  const handleResultImport = useCallback((newTerm: Term) => {
+    setTerms([newTerm]);
+  }, []);
+
   const toggleDarkMode = useCallback(() => {
     setDarkMode(prev => !prev);
   }, []);
@@ -167,10 +187,6 @@ const App: React.FC = () => {
 
   const handleLoadSaved = useCallback((item: SavedCalculation) => {
     setTerms(item.terms);
-    // Try to restore the selected dept if we can infer it, otherwise clear it
-    // We don't have dept ID stored explicitly in saved item types in this version, 
-    // but we can match name or just leave it for manual re-selection if needed.
-    // For now, we won't force the dropdown to change to avoid complexity with missing IDs.
     setView('calculator');
   }, []);
 
@@ -186,114 +202,125 @@ const App: React.FC = () => {
 
   return (
     <ErrorBoundary>
-      <div className={`${darkMode ? 'dark' : ''}`}>
-        <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-gray-900 font-sans text-slate-800 dark:text-gray-100 transition-colors duration-300">
-          <Header 
-            toggleTheme={toggleDarkMode} 
-            isDark={darkMode} 
-            currentView={view} 
-            setView={setView} 
-          />
+      <div className="min-h-screen flex flex-col bg-gray-50 dark:bg-gray-900 font-sans text-gray-800 dark:text-gray-100 transition-colors duration-300">
+        <Header 
+          toggleTheme={toggleDarkMode} 
+          isDark={darkMode} 
+          currentView={view} 
+          setView={setView} 
+        />
 
-          <main className="flex-grow container mx-auto px-4 py-8 max-w-6xl">
-            {view === 'calculator' ? (
-              <>
-                {/* Hero */}
-                <div className="mb-6 animate-fade-in">
-                  <div className="flex flex-col md:flex-row md:items-end md:justify-between mb-6">
-                    <div>
-                      <h2 className="text-3xl font-bold text-emerald-900 dark:text-emerald-400">CGPA Calculator</h2>
-                      <p className="text-slate-600 dark:text-slate-400 mt-1">Calculate your National University grades instantly.</p>
-                    </div>
+        <main className="flex-grow container mx-auto px-4 py-6 md:py-8 max-w-6xl">
+          {view === 'calculator' ? (
+            <>
+              {/* Hero */}
+              <div className="mb-6 animate-fade-in">
+                <div className="flex flex-col lg:flex-row lg:items-end lg:justify-between mb-6">
+                  <div className="mb-4 lg:mb-0">
+                    <h2 className="text-2xl md:text-3xl font-bold text-emerald-900 dark:text-emerald-400">CGPA Calculator</h2>
+                    <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 mt-1">National University Bangladesh</p>
+                  </div>
+                  
+                  {/* Action Buttons - Mobile First Grid */}
+                  <div className="grid grid-cols-2 gap-3 lg:flex lg:items-end lg:gap-2">
+                    <button 
+                      onClick={() => setIsSearchModalOpen(true)}
+                      className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-lg text-xs md:text-sm font-semibold shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 border border-transparent"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+                      </svg>
+                      Import Result
+                    </button>
+                    
                     <button 
                       onClick={() => setScaleModalOpen(true)}
-                      className="hidden md:flex mt-4 md:mt-0 text-emerald-600 dark:text-emerald-400 text-sm font-semibold hover:text-emerald-800 dark:hover:text-emerald-200 items-center gap-1 transition-colors"
+                      className="bg-white dark:bg-gray-800 text-emerald-700 dark:text-emerald-400 border border-gray-200 dark:border-gray-700 px-4 py-2.5 rounded-lg text-xs md:text-sm font-semibold shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-all flex items-center justify-center gap-2 active:scale-95"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
-                      NU Grading Scale
+                      Grading Scale
                     </button>
                   </div>
+                </div>
 
-                  <SyllabusSelector 
-                    selectedDept={selectedSyllabusDept}
-                    onDeptChange={setSelectedSyllabusDept}
-                    onLoadSyllabus={handleSyllabusLoad} 
+                <SyllabusSelector 
+                  selectedDept={selectedSyllabusDept}
+                  onDeptChange={setSelectedSyllabusDept}
+                  onLoadSyllabus={handleSyllabusLoad} 
+                />
+              </div>
+
+              <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 md:gap-8 items-start animate-fade-in">
+                {/* Input Form */}
+                <div className="lg:col-span-8 space-y-6">
+                  {terms.map((term) => (
+                    <TermBlock
+                      key={term.id}
+                      term={term}
+                      onUpdateTerm={updateTerm}
+                      onDeleteTerm={() => deleteTerm(term.id)}
+                      isOnlyTerm={terms.length === 1}
+                    />
+                  ))}
+
+                  <button
+                    onClick={addTerm}
+                    className="group w-full py-4 rounded-xl border-2 border-dashed border-emerald-200 dark:border-emerald-800/50 bg-emerald-50/50 dark:bg-gray-800/50 text-emerald-600 dark:text-emerald-400 font-semibold hover:bg-emerald-50 dark:hover:bg-gray-800 hover:border-emerald-400 dark:hover:border-emerald-600 transition-all shadow-sm flex items-center justify-center gap-2 active:scale-[0.99]"
+                  >
+                    <div className="bg-emerald-100 dark:bg-emerald-900/50 rounded-full p-1 group-hover:bg-emerald-200 dark:group-hover:bg-emerald-800 transition-colors">
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                      </svg>
+                    </div>
+                    {selectedSyllabusDept ? 'Add Next Year / Semester' : 'Add Another Year'}
+                  </button>
+                </div>
+
+                {/* Results (Sticky) */}
+                <div className="lg:col-span-4 lg:sticky lg:top-24 space-y-6">
+                  <ResultsSection 
+                      result={result} 
+                      terms={terms} 
+                      onSave={() => setSaveModalOpen(true)}
                   />
                 </div>
+              </div>
+            </>
+          ) : (
+            <Suspense fallback={<LoadingSpinner />}>
+              <SavedResults 
+                items={savedCalculations}
+                onLoad={handleLoadSaved}
+                onDelete={handleDeleteSaved}
+                onCreateNew={() => setView('calculator')}
+              />
+            </Suspense>
+          )}
+        </main>
 
-                <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start animate-fade-in">
-                  {/* Input Form */}
-                  <div className="lg:col-span-8 space-y-6">
-                    {terms.map((term) => (
-                      <TermBlock
-                        key={term.id}
-                        term={term}
-                        onUpdateTerm={updateTerm}
-                        onDeleteTerm={() => deleteTerm(term.id)}
-                        isOnlyTerm={terms.length === 1}
-                      />
-                    ))}
-
-                    <button
-                      onClick={addTerm}
-                      className="group w-full py-4 rounded-xl border-2 border-dashed border-emerald-200 dark:border-emerald-800 bg-emerald-50/50 dark:bg-emerald-900/20 text-emerald-600 dark:text-emerald-400 font-semibold hover:bg-emerald-50 dark:hover:bg-emerald-900/40 hover:border-emerald-400 dark:hover:border-emerald-600 transition-all shadow-sm flex items-center justify-center gap-2"
-                    >
-                      <div className="bg-emerald-100 dark:bg-emerald-800 rounded-full p-1 group-hover:bg-emerald-200 dark:group-hover:bg-emerald-700 transition-colors">
-                        <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
-                        </svg>
-                      </div>
-                      {selectedSyllabusDept ? 'Add Next Year / Semester Automatically' : 'Add Another Year / Semester'}
-                    </button>
-
-                    <div className="md:hidden text-center mt-4">
-                      <button 
-                        onClick={() => setScaleModalOpen(true)}
-                        className="text-emerald-600 dark:text-emerald-400 text-sm font-medium hover:underline"
-                      >
-                        View NU Grading Scale
-                      </button>
-                    </div>
-                  </div>
-
-                  {/* Results (Sticky) */}
-                  <div className="lg:col-span-4 lg:sticky lg:top-24 space-y-6">
-                    <ResultsSection 
-                        result={result} 
-                        terms={terms} 
-                        onSave={() => setSaveModalOpen(true)}
-                    />
-                  </div>
-                </div>
-              </>
-            ) : (
-              <Suspense fallback={<LoadingSpinner />}>
-                <SavedResults 
-                  items={savedCalculations}
-                  onLoad={handleLoadSaved}
-                  onDelete={handleDeleteSaved}
-                  onCreateNew={() => setView('calculator')}
-                />
-              </Suspense>
-            )}
-          </main>
-
-          <Suspense fallback={null}>
-            <GradeScaleTable isOpen={isScaleModalOpen} onClose={() => setScaleModalOpen(false)} />
-          </Suspense>
-          
-          <Suspense fallback={null}>
-            <SaveModal 
-              isOpen={isSaveModalOpen} 
-              onClose={() => setSaveModalOpen(false)} 
-              onSave={handleSave}
-            />
-          </Suspense>
-          
-          <Footer />
-        </div>
+        <Suspense fallback={null}>
+          <GradeScaleTable isOpen={isScaleModalOpen} onClose={() => setScaleModalOpen(false)} />
+        </Suspense>
+        
+        <Suspense fallback={null}>
+          <SaveModal 
+            isOpen={isSaveModalOpen} 
+            onClose={() => setSaveModalOpen(false)} 
+            onSave={handleSave}
+          />
+        </Suspense>
+        
+        <Suspense fallback={null}>
+          <ResultSearchModal
+            isOpen={isSearchModalOpen}
+            onClose={() => setIsSearchModalOpen(false)}
+            onImport={handleResultImport}
+          />
+        </Suspense>
+        
+        <Footer />
       </div>
     </ErrorBoundary>
   );

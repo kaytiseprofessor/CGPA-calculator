@@ -2,9 +2,7 @@
 import React, { useState, useMemo } from 'react';
 import { DEPARTMENTS } from '../data/syllabus';
 import { Term } from '../types';
-
-// Helper to generate ID
-const generateId = () => Math.random().toString(36).substr(2, 9);
+import { generateId } from '../utils';
 
 interface SyllabusSelectorProps {
   selectedDept: string;

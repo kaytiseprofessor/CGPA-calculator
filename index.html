@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-    <meta name="theme-color" content="#047857" />
+    <meta name="theme-color" content="#064e3b" />
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="NU CGPA">
@@ -17,6 +17,20 @@
         theme: {
           extend: {
             colors: {
+              // Using Slate scale for Grays provides a premium, cool-toned dark mode
+              gray: {
+                50: '#f8fafc',
+                100: '#f1f5f9',
+                200: '#e2e8f0',
+                300: '#cbd5e1',
+                400: '#94a3b8',
+                500: '#64748b',
+                600: '#475569',
+                700: '#334155',
+                800: '#1e293b', // Main card background
+                900: '#0f172a', // Main app background
+                950: '#020617',
+              },
               emerald: {
                 50: '#ecfdf5',
                 100: '#d1fae5',
@@ -28,6 +42,7 @@
                 700: '#047857',
                 800: '#065f46',
                 900: '#064e3b',
+                950: '#022c22', // Deepest header color
               }
             }
           }
@@ -37,6 +52,8 @@
     <style>
       body {
         font-family: 'Inter', sans-serif;
+        /* Default to dark background to avoid white flash */
+        background-color: #0f172a; 
       }
       /* Smooth scrolling */
       html {
@@ -47,10 +64,10 @@
         width: 8px;
       }
       ::-webkit-scrollbar-track {
-        background: #f1f1f1;
+        background: #1e293b;
       }
       .dark ::-webkit-scrollbar-track {
-        background: #1f2937;
+        background: #0f172a;
       }
       ::-webkit-scrollbar-thumb {
         background: #10b981;
@@ -74,18 +91,19 @@
         to { opacity: 1; transform: translateY(0); }
       }
     </style>
-    <script type="importmap">
+  <script type="importmap">
 {
   "imports": {
-    "react/": "https://aistudiocdn.com/react@^19.2.0/",
     "react": "https://aistudiocdn.com/react@^19.2.0",
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
-    "@google/genai": "https://aistudiocdn.com/@google/genai@^1.30.0"
+    "react/": "https://aistudiocdn.com/react@^19.2.0/",
+    "vite": "https://aistudiocdn.com/vite@^7.2.2",
+    "@vitejs/plugin-react": "https://aistudiocdn.com/@vitejs/plugin-react@^5.1.1"
   }
 }
 </script>
-  </head>
-  <body>
+</head>
+  <body class="bg-gray-50 dark:bg-gray-900 text-gray-900 dark:text-gray-100">
     <div id="root"></div>
     <script type="module" src="index.tsx"></script>
     <script>
