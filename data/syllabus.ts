@@ -161,8 +161,10 @@ export const DEPARTMENTS: Record<string, DepartmentData> = {
         { title: "Advanced Auditing", credits: 4 },
         { title: "Accounting Information Systems", credits: 4 },
         { title: "Organizational Behavior", credits: 4 },
+        { title: "Corporate Law and Practices", credits: 4 },
         { title: "Working Capital Management", credits: 4 },
         { title: "Advanced Accounting-II", credits: 4 },
+        { title: "Investment Analysis & Portfolio Mgmt.", credits: 4 },
         { title: "Research Methodology", credits: 4 },
         { title: "Viva-Voce", credits: 4 },
       ]

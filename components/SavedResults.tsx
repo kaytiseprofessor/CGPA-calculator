@@ -21,7 +21,7 @@ const SavedResults: React.FC<SavedResultsProps> = ({ items, onLoad, onDelete, on
         </div>
         <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">No saved results yet</h3>
         <p className="text-gray-500 dark:text-gray-400 mb-8 max-w-xs mx-auto">
-          Calculate your CGPA and click the "Save" button to store your results here.
+          Calculate your CGPA and click the "Save" button. Your results will be stored safely on this device.
         </p>
         <button
           onClick={onCreateNew}
@@ -35,10 +35,15 @@ const SavedResults: React.FC<SavedResultsProps> = ({ items, onLoad, onDelete, on
 
   return (
     <div className="space-y-6 animate-fade-in">
-      <div className="flex justify-between items-end">
+      <div className="flex flex-col md:flex-row justify-between items-end gap-4">
         <div>
             <h2 className="text-2xl font-bold text-emerald-900 dark:text-emerald-400">Saved Results</h2>
-            <p className="text-gray-500 dark:text-gray-400 text-sm">Your academic history at a glance</p>
+            <p className="text-gray-500 dark:text-gray-400 text-sm flex items-center gap-1.5 mt-1 bg-gray-100 dark:bg-gray-800 w-fit px-2 py-1 rounded-md">
+              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-emerald-600 dark:text-emerald-400" viewBox="0 0 20 20" fill="currentColor">
+                <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v4a1 1 0 00.293.707l2.828 2.829a1 1 0 101.415-1.415L11 9.586V6z" clipRule="evenodd" />
+              </svg>
+              Stored locally on this device
+            </p>
         </div>
         <button
             onClick={onCreateNew}
@@ -53,7 +58,7 @@ const SavedResults: React.FC<SavedResultsProps> = ({ items, onLoad, onDelete, on
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {items.map((item) => (
-          <div key={item.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-all group">
+          <div key={item.id} className="bg-white dark:bg-gray-800 rounded-xl shadow-sm border border-gray-100 dark:border-gray-700 overflow-hidden hover:shadow-lg transition-all group relative">
             <div className="p-6">
               <div className="flex justify-between items-start mb-4">
                 <h3 className="font-bold text-lg text-gray-800 dark:text-white group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-1" title={item.title}>

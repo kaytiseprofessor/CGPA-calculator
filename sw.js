@@ -1,31 +1,55 @@
 
-const CACHE_NAME = 'nu-cgpa-genius-v1';
+const CACHE_NAME = 'nu-cgpa-genius-v3';
 const urlsToCache = [
   '/',
   '/index.html',
-  '/manifest.json'
+  '/manifest.json',
+  // External assets handled by runtime caching
 ];
 
 self.addEventListener('install', (event) => {
-  // Perform install steps
   event.waitUntil(
     caches.open(CACHE_NAME)
-      .then((cache) => {
-        console.log('Opened cache');
-        return cache.addAll(urlsToCache);
-      })
+      .then((cache) => cache.addAll(urlsToCache))
   );
 });
 
 self.addEventListener('fetch', (event) => {
+  const request = event.request;
+  
+  // For HTML requests (navigation), try Network first, then Cache.
+  // This ensures users always get the latest version of the app structure.
+  if (request.mode === 'navigate') {
+    event.respondWith(
+      fetch(request)
+        .then((response) => {
+          return caches.open(CACHE_NAME).then((cache) => {
+            cache.put(request, response.clone());
+            return response;
+          });
+        })
+        .catch(() => {
+          return caches.match(request);
+        })
+    );
+    return;
+  }
+
+  // For other resources (CSS, JS, Images), try Cache first, then Network.
+  // This provides speed for assets that change less frequently.
   event.respondWith(
-    caches.match(event.request)
+    caches.match(request)
       .then((response) => {
-        // Cache hit - return response
         if (response) {
           return response;
         }
-        return fetch(event.request);
+        return fetch(request).then((networkResponse) => {
+          // Optional: Cache new assets dynamically
+          // if (networkResponse.ok) {
+          //   caches.open(CACHE_NAME).then(cache => cache.put(request, networkResponse.clone()));
+          // }
+          return networkResponse;
+        });
       })
   );
 });

@@ -1,5 +1,5 @@
 {
   "name": "NU CGPA Genius",
-  "description": "A modern CGPA calculator for National University Bangladesh students featuring intelligent grade analysis and academic advice powered by Gemini.",
+  "description": "The ultimate CGPA calculator for National University Bangladesh. Calculate grades offline, save results locally, and view the complete syllabus for all departments.",
   "requestFramePermissions": []
 }

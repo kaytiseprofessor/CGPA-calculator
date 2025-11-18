@@ -24,11 +24,6 @@ export interface CalculationResult {
   cgpa: number;
 }
 
-export interface AdviceResponse {
-  analysis: string;
-  tips: string[];
-}
-
 export interface SavedCalculation {
   id: string;
   title: string;

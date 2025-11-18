@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { Course } from '../types';
 import { NU_GRADING_SCALE } from '../constants';
@@ -9,7 +10,7 @@ interface CourseRowProps {
   isOnlyCourse: boolean;
 }
 
-const CourseRow: React.FC<CourseRowProps> = ({ course, onUpdate, onDelete, isOnlyCourse }) => {
+const CourseRow: React.FC<CourseRowProps> = React.memo(({ course, onUpdate, onDelete, isOnlyCourse }) => {
   
   const handleChange = (field: keyof Course, value: string | number) => {
     onUpdate({ ...course, [field]: value });
@@ -83,6 +84,6 @@ const CourseRow: React.FC<CourseRowProps> = ({ course, onUpdate, onDelete, isOnl
       </div>
     </div>
   );
-};
+});
 
 export default CourseRow;

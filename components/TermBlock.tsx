@@ -1,4 +1,5 @@
-import React from 'react';
+
+import React, { useCallback, useMemo } from 'react';
 import { Term, Course } from '../types';
 import CourseRow from './CourseRow';
 import { DEFAULT_CREDITS } from '../constants';
@@ -13,9 +14,9 @@ interface TermBlockProps {
   isOnlyTerm: boolean;
 }
 
-const TermBlock: React.FC<TermBlockProps> = ({ term, onUpdateTerm, onDeleteTerm, isOnlyTerm }) => {
+const TermBlock: React.FC<TermBlockProps> = React.memo(({ term, onUpdateTerm, onDeleteTerm, isOnlyTerm }) => {
 
-  const addCourse = () => {
+  const addCourse = useCallback(() => {
     const newCourse: Course = {
       id: generateId(),
       name: '',
@@ -23,20 +24,20 @@ const TermBlock: React.FC<TermBlockProps> = ({ term, onUpdateTerm, onDeleteTerm,
       gradePoint: 3.00, // Default B
     };
     onUpdateTerm({ ...term, courses: [...term.courses, newCourse] });
-  };
+  }, [term, onUpdateTerm]);
 
-  const updateCourse = (updatedCourse: Course) => {
+  const updateCourse = useCallback((updatedCourse: Course) => {
     const updatedCourses = term.courses.map(c => c.id === updatedCourse.id ? updatedCourse : c);
     onUpdateTerm({ ...term, courses: updatedCourses });
-  };
+  }, [term, onUpdateTerm]);
 
-  const deleteCourse = (courseId: string) => {
+  const deleteCourse = useCallback((courseId: string) => {
     if (term.courses.length <= 1) return;
     const updatedCourses = term.courses.filter(c => c.id !== courseId);
     onUpdateTerm({ ...term, courses: updatedCourses });
-  };
+  }, [term, onUpdateTerm]);
 
-  const calculateTermGPA = () => {
+  const termGpa = useMemo(() => {
     let totalPoints = 0;
     let totalCredits = 0;
     term.courses.forEach(c => {
@@ -44,9 +45,9 @@ const TermBlock: React.FC<TermBlockProps> = ({ term, onUpdateTerm, onDeleteTerm,
       totalCredits += c.credits;
     });
     return totalCredits > 0 ? (totalPoints / totalCredits).toFixed(2) : '0.00';
-  };
+  }, [term.courses]);
 
-  const termGpa = parseFloat(calculateTermGPA());
+  const gpaValue = parseFloat(termGpa);
   
   const getGpaColor = (gpa: number) => {
     if (gpa >= 3.75) return 'bg-emerald-100 text-emerald-800 border-emerald-200 dark:bg-emerald-900/50 dark:text-emerald-300 dark:border-emerald-800';
@@ -59,8 +60,8 @@ const TermBlock: React.FC<TermBlockProps> = ({ term, onUpdateTerm, onDeleteTerm,
     <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-sm border border-gray-200 dark:border-gray-700 overflow-hidden transition-all hover:shadow-md animate-fade-in">
       <div className="bg-gray-50/80 dark:bg-gray-700/80 backdrop-blur-sm px-5 py-4 border-b border-gray-200 dark:border-gray-600 flex flex-wrap justify-between items-center gap-3">
         <div className="flex items-center gap-3 flex-grow">
-          <div className={`hidden sm:flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold border ${getGpaColor(termGpa)}`}>
-            {termGpa.toFixed(2)}
+          <div className={`hidden sm:flex h-8 w-8 items-center justify-center rounded-full text-xs font-bold border ${getGpaColor(gpaValue)}`}>
+            {termGpa}
           </div>
           <input
             type="text"
@@ -72,8 +73,8 @@ const TermBlock: React.FC<TermBlockProps> = ({ term, onUpdateTerm, onDeleteTerm,
         </div>
         
         <div className="flex items-center gap-2 ml-auto">
-          <span className={`sm:hidden text-xs font-bold px-2 py-1 rounded-full border ${getGpaColor(termGpa)}`}>
-            GPA: {termGpa.toFixed(2)}
+          <span className={`sm:hidden text-xs font-bold px-2 py-1 rounded-full border ${getGpaColor(gpaValue)}`}>
+            GPA: {termGpa}
           </span>
           <button
             onClick={onDeleteTerm}
@@ -124,6 +125,6 @@ const TermBlock: React.FC<TermBlockProps> = ({ term, onUpdateTerm, onDeleteTerm,
       </div>
     </div>
   );
-};
+});
 
 export default TermBlock;

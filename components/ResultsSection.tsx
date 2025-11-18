@@ -8,7 +8,7 @@ interface ResultsSectionProps {
   onSave: () => void;
 }
 
-const ResultsSection: React.FC<ResultsSectionProps> = ({ result, terms, onSave }) => {
+const ResultsSection: React.FC<ResultsSectionProps> = React.memo(({ result, terms, onSave }) => {
   return (
     <div className="space-y-6">
       {/* Main Score Card */}
@@ -65,6 +65,6 @@ const ResultsSection: React.FC<ResultsSectionProps> = ({ result, terms, onSave }
       </div>
     </div>
   );
-};
+});
 
 export default ResultsSection;
