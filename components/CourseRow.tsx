@@ -17,13 +17,13 @@ const CourseRow: React.FC<CourseRowProps> = React.memo(({ course, onUpdate, onDe
   };
 
   return (
-    <div className="grid grid-cols-12 gap-2 sm:gap-3 items-center group">
+    <div className="grid grid-cols-12 gap-1 sm:gap-3 items-center group">
       {/* Course Name */}
       <div className="col-span-5 md:col-span-6">
         <input
           type="text"
           placeholder="Subject"
-          className="w-full bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100 rounded-lg px-2 sm:px-3 py-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:bg-white dark:focus:bg-gray-800 outline-none transition-all placeholder-gray-400 dark:placeholder-gray-600 truncate"
+          className="w-full bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100 rounded-lg px-2 py-2 text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 focus:bg-white dark:focus:bg-gray-800 outline-none transition-all placeholder-gray-400 dark:placeholder-gray-600 truncate"
           value={course.name}
           onChange={(e) => handleChange('name', e.target.value)}
         />
@@ -37,7 +37,7 @@ const CourseRow: React.FC<CourseRowProps> = React.memo(({ course, onUpdate, onDe
           max="10"
           step="0.5"
           placeholder="Cr"
-          className="w-full bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100 rounded-lg px-1 py-2.5 text-sm text-center focus:ring-2 focus:ring-emerald-500 focus:bg-white dark:focus:bg-gray-800 outline-none transition-all font-medium p-0"
+          className="w-full bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100 rounded-lg px-0.5 py-2 text-xs sm:text-sm text-center focus:ring-2 focus:ring-emerald-500 focus:bg-white dark:focus:bg-gray-800 outline-none transition-all font-medium"
           value={course.credits}
           onChange={(e) => handleChange('credits', parseFloat(e.target.value) || 0)}
         />
@@ -47,7 +47,7 @@ const CourseRow: React.FC<CourseRowProps> = React.memo(({ course, onUpdate, onDe
       <div className="col-span-4 md:col-span-3">
         <div className="relative">
             <select
-            className="w-full appearance-none bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100 rounded-lg pl-2 sm:pl-3 pr-6 sm:pr-8 py-2.5 text-sm focus:ring-2 focus:ring-emerald-500 focus:bg-white dark:focus:bg-gray-800 outline-none cursor-pointer transition-all font-bold"
+            className="w-full appearance-none bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 text-gray-800 dark:text-gray-100 rounded-lg pl-2 pr-4 sm:pr-8 py-2 text-xs sm:text-sm focus:ring-2 focus:ring-emerald-500 focus:bg-white dark:focus:bg-gray-800 outline-none cursor-pointer transition-all font-bold"
             value={course.gradePoint}
             onChange={(e) => handleChange('gradePoint', parseFloat(e.target.value))}
             >
@@ -58,7 +58,7 @@ const CourseRow: React.FC<CourseRowProps> = React.memo(({ course, onUpdate, onDe
             ))}
             </select>
             <div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-1 sm:px-2 text-gray-500 dark:text-gray-400">
-            <svg className="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="h-3 w-3 sm:h-4 sm:w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"></path>
             </svg>
             </div>
@@ -70,14 +70,14 @@ const CourseRow: React.FC<CourseRowProps> = React.memo(({ course, onUpdate, onDe
         <button
           onClick={onDelete}
           disabled={isOnlyCourse}
-          className={`p-2 rounded-full transition-all ${
+          className={`p-1.5 sm:p-2 rounded-full transition-all ${
             isOnlyCourse 
               ? 'text-gray-200 dark:text-gray-700 cursor-not-allowed' 
               : 'text-gray-300 dark:text-gray-500 hover:bg-red-50 dark:hover:bg-red-900/20 hover:text-red-500'
           }`}
           title="Remove"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 sm:h-5 sm:w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
           </svg>
         </button>
