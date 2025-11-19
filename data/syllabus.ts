@@ -146,6 +146,7 @@ export const DEPARTMENTS: Record<string, DepartmentData> = {
         { title: "Macro Economics", credits: 4 },
         { title: "Taxation in Bangladesh", credits: 4 },
         { title: "Business Communication", credits: 4 },
+        { title: "Computer Information Technology (Accounting) ", credits: 4 },
       ],
       "3rd Year": [
         { title: "Audit and Assurance", credits: 4 },
