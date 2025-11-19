@@ -146,7 +146,6 @@ export const DEPARTMENTS: Record<string, DepartmentData> = {
         { title: "Macro Economics", credits: 4 },
         { title: "Taxation in Bangladesh", credits: 4 },
         { title: "Business Communication", credits: 4 },
-        { title: "Computer Information Technology (Accounting) ", credits: 4 },
       ],
       "3rd Year": [
         { title: "Audit and Assurance", credits: 4 },
@@ -469,6 +468,90 @@ export const DEPARTMENTS: Record<string, DepartmentData> = {
       ]
     }
   },
+  "PHILOSOPHY": {
+    name: "Philosophy",
+    category: "Arts & Humanities",
+    years: {
+      "1st Year": [
+        { title: "Introduction to Philosophy", credits: 4 },
+        { title: "History of Western Philosophy (Ancient & Medieval)", credits: 4 },
+        { title: "Introduction to Logic", credits: 4 },
+        { title: "Introduction to Ethics", credits: 4 },
+        { title: "Political Theory", credits: 4 },
+        { title: "History of the Emergence of Independent Bangladesh", credits: 4 },
+      ],
+      "2nd Year": [
+        { title: "History of Western Philosophy (Modern)", credits: 4 },
+        { title: "Muslim Philosophy", credits: 4 },
+        { title: "Indian Philosophy", credits: 4 },
+        { title: "General Psychology", credits: 4 },
+        { title: "Bangladesh Society and Culture", credits: 4 },
+        { title: "Introduction to Sociology", credits: 4 },
+      ],
+      "3rd Year": [
+        { title: "History of Western Philosophy (Contemporary)", credits: 4 },
+        { title: "Epistemology & Metaphysics", credits: 4 },
+        { title: "Moral Philosophy", credits: 4 },
+        { title: "Symbolic Logic", credits: 4 },
+        { title: "Philosophy of Religion", credits: 4 },
+        { title: "Political Philosophy", credits: 4 },
+        { title: "Philosophy of Bengal", credits: 4 },
+        { title: "Philosophy of Education", credits: 4 },
+      ],
+      "4th Year": [
+        { title: "Philosophy of Mind", credits: 4 },
+        { title: "Philosophy of Art", credits: 4 },
+        { title: "Philosophy of Science", credits: 4 },
+        { title: "Social Philosophy", credits: 4 },
+        { title: "Environmental Philosophy", credits: 4 },
+        { title: "Post-Modernism", credits: 4 },
+        { title: "Applied Ethics", credits: 4 },
+        { title: "Viva-Voce", credits: 4 },
+      ]
+    }
+  },
+  "ISLAMIC_STUDIES": {
+    name: "Islamic Studies",
+    category: "Arts & Humanities",
+    years: {
+      "1st Year": [
+        { title: "Al-Quran (Text)", credits: 4 },
+        { title: "Al-Hadith (Text)", credits: 4 },
+        { title: "History of Islam (570-661 AD)", credits: 4 },
+        { title: "History of the Emergence of Independent Bangladesh", credits: 4 },
+        { title: "Arabic Language", credits: 4 },
+        { title: "Introduction to Philosophy", credits: 4 },
+      ],
+      "2nd Year": [
+        { title: "Ulumul Quran", credits: 4 },
+        { title: "Ulumul Hadith", credits: 4 },
+        { title: "Muslim Law & Jurisprudence", credits: 4 },
+        { title: "History of Islam (661-1258 AD)", credits: 4 },
+        { title: "Political System in Islam", credits: 4 },
+        { title: "Economics of Islam", credits: 4 },
+      ],
+      "3rd Year": [
+        { title: "Tafsir Literature", credits: 4 },
+        { title: "Hadith Literature", credits: 4 },
+        { title: "Islamic Dawah", credits: 4 },
+        { title: "Islamic Ethics", credits: 4 },
+        { title: "Study of Major Religions", credits: 4 },
+        { title: "Muslim Philosophy", credits: 4 },
+        { title: "Islam and Science", credits: 4 },
+        { title: "History of Muslims in Bengal", credits: 4 },
+      ],
+      "4th Year": [
+        { title: "Principles of Islamic Jurisprudence", credits: 4 },
+        { title: "Human Rights in Islam", credits: 4 },
+        { title: "Bank Management & Insurance in Islam", credits: 4 },
+        { title: "Modern Muslim World", credits: 4 },
+        { title: "Islamic Social System", credits: 4 },
+        { title: "Islamic Political Thought", credits: 4 },
+        { title: "Environmental Studies in Islam", credits: 4 },
+        { title: "Viva-Voce", credits: 4 },
+      ]
+    }
+  },
 
   // --- Social Science ---
   "ECONOMICS": {
@@ -593,6 +676,48 @@ export const DEPARTMENTS: Record<string, DepartmentData> = {
         { title: "Industrial Sociology", credits: 4 },
         { title: "Sociology of Health", credits: 4 },
         { title: "Deviance and Crime", credits: 4 },
+        { title: "Viva-Voce", credits: 4 },
+      ]
+    }
+  },
+  "SOCIAL_WORK": {
+    name: "Social Work",
+    category: "Social Science",
+    years: {
+      "1st Year": [
+        { title: "Introduction to Social Work", credits: 4 },
+        { title: "Bangladesh Studies", credits: 4 },
+        { title: "History of the Emergence of Independent Bangladesh", credits: 4 },
+        { title: "Introduction to Sociology", credits: 4 },
+        { title: "Economics / Psychology", credits: 4 },
+        { title: "Human Biology", credits: 4 },
+      ],
+      "2nd Year": [
+        { title: "Social Work Methods", credits: 4 },
+        { title: "Social Problems & Analysis", credits: 4 },
+        { title: "Social Policy & Planning", credits: 4 },
+        { title: "Social Welfare Administration", credits: 4 },
+        { title: "Anthropology / Political Science", credits: 4 },
+        { title: "Computer Application", credits: 4 },
+      ],
+      "3rd Year": [
+        { title: "Social Research & Statistics", credits: 4 },
+        { title: "Social Work with Families", credits: 4 },
+        { title: "Poverty and Social Security", credits: 4 },
+        { title: "Project Planning and Management", credits: 4 },
+        { title: "Rural & Urban Community Development", credits: 4 },
+        { title: "Social Action & Social Legislation", credits: 4 },
+        { title: "Human Rights & Social Justice", credits: 4 },
+        { title: "Field Work Education", credits: 4 },
+      ],
+      "4th Year": [
+        { title: "Clinical Social Work", credits: 4 },
+        { title: "Working with People with Disabilities", credits: 4 },
+        { title: "Disaster Management", credits: 4 },
+        { title: "Correctional Services", credits: 4 },
+        { title: "Medical & Psychiatric Social Work", credits: 4 },
+        { title: "NGOs and Development", credits: 4 },
+        { title: "Advanced Field Work", credits: 4 },
         { title: "Viva-Voce", credits: 4 },
       ]
     }
@@ -805,6 +930,174 @@ export const DEPARTMENTS: Record<string, DepartmentData> = {
         { title: "Microbiology & Immunology", credits: 4 },
         { title: "Biotechnology", credits: 4 },
         { title: "Molecular Biology", credits: 4 },
+        { title: "Viva-Voce", credits: 4 },
+      ]
+    }
+  },
+  "PSYCHOLOGY": {
+    name: "Psychology",
+    category: "Science",
+    years: {
+      "1st Year": [
+        { title: "Introduction to Psychology", credits: 4 },
+        { title: "Experimental Psychology", credits: 4 },
+        { title: "Social Psychology", credits: 4 },
+        { title: "History of the Emergence of Independent Bangladesh", credits: 4 },
+        { title: "Statistics-I", credits: 4 },
+        { title: "Zoology / Sociology", credits: 4 },
+      ],
+      "2nd Year": [
+        { title: "Developmental Psychology", credits: 4 },
+        { title: "Psychological Testing", credits: 4 },
+        { title: "Statistics in Psychology", credits: 4 },
+        { title: "Biology of Behavior", credits: 4 },
+        { title: "Zoology / Sociology-II", credits: 4 },
+        { title: "Practical Psychology-II", credits: 4 },
+      ],
+      "3rd Year": [
+        { title: "Abnormal Psychology", credits: 4 },
+        { title: "Industrial Psychology", credits: 4 },
+        { title: "Educational Psychology", credits: 4 },
+        { title: "Cognitive Psychology", credits: 4 },
+        { title: "Counseling Psychology", credits: 4 },
+        { title: "Research Methodology", credits: 4 },
+        { title: "Personality Theories", credits: 4 },
+        { title: "Practical Psychology-III", credits: 4 },
+      ],
+      "4th Year": [
+        { title: "Clinical Psychology", credits: 4 },
+        { title: "Health Psychology", credits: 4 },
+        { title: "Positive Psychology", credits: 4 },
+        { title: "Organizational Behavior", credits: 4 },
+        { title: "Psychology of Environment", credits: 4 },
+        { title: "Forensic Psychology", credits: 4 },
+        { title: "Data Analysis (SPSS)", credits: 4 },
+        { title: "Viva-Voce", credits: 4 },
+      ]
+    }
+  },
+  "GEOGRAPHY": {
+    name: "Geography & Environment",
+    category: "Science",
+    years: {
+      "1st Year": [
+        { title: "Introduction to Geography & Environment", credits: 4 },
+        { title: "Physical Geography", credits: 4 },
+        { title: "Human Geography", credits: 4 },
+        { title: "History of the Emergence of Independent Bangladesh", credits: 4 },
+        { title: "Economics / Sociology", credits: 4 },
+        { title: "Botany / Zoology", credits: 4 },
+      ],
+      "2nd Year": [
+        { title: "Geomorphology", credits: 4 },
+        { title: "Climatology", credits: 4 },
+        { title: "Economic Geography", credits: 4 },
+        { title: "Cartography", credits: 4 },
+        { title: "Statistics for Geography", credits: 4 },
+        { title: "Practical Geography-II", credits: 4 },
+      ],
+      "3rd Year": [
+        { title: "Soil Geography", credits: 4 },
+        { title: "Biogeography", credits: 4 },
+        { title: "Urban Geography", credits: 4 },
+        { title: "Oceanography", credits: 4 },
+        { title: "Population Geography", credits: 4 },
+        { title: "Geographic Information System (GIS)", credits: 4 },
+        { title: "Environmental Issues", credits: 4 },
+        { title: "Regional Geography of Bangladesh", credits: 4 },
+      ],
+      "4th Year": [
+        { title: "Geographical Thought", credits: 4 },
+        { title: "Political Geography", credits: 4 },
+        { title: "Disaster Management", credits: 4 },
+        { title: "Rural Development", credits: 4 },
+        { title: "Transport Geography", credits: 4 },
+        { title: "Remote Sensing", credits: 4 },
+        { title: "Research Methodology", credits: 4 },
+        { title: "Viva-Voce", credits: 4 },
+      ]
+    }
+  },
+  "STATISTICS": {
+    name: "Statistics",
+    category: "Science",
+    years: {
+      "1st Year": [
+        { title: "Descriptive Statistics", credits: 4 },
+        { title: "Probability", credits: 4 },
+        { title: "Linear Algebra", credits: 4 },
+        { title: "Calculus", credits: 4 },
+        { title: "Economics / Mathematics", credits: 4 },
+        { title: "History of the Emergence of Independent Bangladesh", credits: 4 },
+      ],
+      "2nd Year": [
+        { title: "Probability Distributions", credits: 4 },
+        { title: "Sampling Distributions", credits: 4 },
+        { title: "Basic Regression Analysis", credits: 4 },
+        { title: "Demography", credits: 4 },
+        { title: "Computer Programming", credits: 4 },
+        { title: "Practical Statistics-II", credits: 4 },
+      ],
+      "3rd Year": [
+        { title: "Statistical Inference-I", credits: 4 },
+        { title: "Design of Experiments", credits: 4 },
+        { title: "Sample Survey", credits: 4 },
+        { title: "Applied Statistics", credits: 4 },
+        { title: "Operations Research", credits: 4 },
+        { title: "Multivariate Analysis", credits: 4 },
+        { title: "SQC & Reliability", credits: 4 },
+        { title: "Practical Statistics-III", credits: 4 },
+      ],
+      "4th Year": [
+        { title: "Statistical Inference-II", credits: 4 },
+        { title: "Econometrics", credits: 4 },
+        { title: "Biostatistics", credits: 4 },
+        { title: "Stochastic Processes", credits: 4 },
+        { title: "Time Series Analysis", credits: 4 },
+        { title: "Actuarial Statistics", credits: 4 },
+        { title: "Data Analysis with R/SPSS", credits: 4 },
+        { title: "Viva-Voce", credits: 4 },
+      ]
+    }
+  },
+  "SOIL_SCIENCE": {
+    name: "Soil Science",
+    category: "Science",
+    years: {
+      "1st Year": [
+        { title: "Introductory Soil Science", credits: 4 },
+        { title: "Geology", credits: 4 },
+        { title: "Chemistry-I", credits: 4 },
+        { title: "Botany-I", credits: 4 },
+        { title: "Microbiology", credits: 4 },
+        { title: "History of the Emergence of Independent Bangladesh", credits: 4 },
+      ],
+      "2nd Year": [
+        { title: "Soil Physics", credits: 4 },
+        { title: "Soil Mineralogy", credits: 4 },
+        { title: "Chemistry-II", credits: 4 },
+        { title: "Botany-II", credits: 4 },
+        { title: "Soil Ecology", credits: 4 },
+        { title: "Practical Soil Science-II", credits: 4 },
+      ],
+      "3rd Year": [
+        { title: "Soil Chemistry", credits: 4 },
+        { title: "Soil Fertility & Plant Nutrition", credits: 4 },
+        { title: "Soil Survey & Classification", credits: 4 },
+        { title: "Soil Microbiology", credits: 4 },
+        { title: "Soil & Water Conservation", credits: 4 },
+        { title: "Agronomy", credits: 4 },
+        { title: "Environmental Pollution", credits: 4 },
+        { title: "Practical Soil Science-III", credits: 4 },
+      ],
+      "4th Year": [
+        { title: "Soil Management", credits: 4 },
+        { title: "Soil Pollution & Remediation", credits: 4 },
+        { title: "Soil Biotechnology", credits: 4 },
+        { title: "Remote Sensing & GIS", credits: 4 },
+        { title: "Research Methodology", credits: 4 },
+        { title: "Analytical Techniques", credits: 4 },
+        { title: "Thesis / Project", credits: 4 },
         { title: "Viva-Voce", credits: 4 },
       ]
     }

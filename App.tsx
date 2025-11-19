@@ -15,7 +15,6 @@ import { generateId } from './utils';
 const GradeScaleTable = React.lazy(() => import('./components/GradeScaleTable'));
 const SavedResults = React.lazy(() => import('./components/SavedResults'));
 const SaveModal = React.lazy(() => import('./components/SaveModal'));
-const ResultSearchModal = React.lazy(() => import('./components/ResultSearchModal'));
 
 const App: React.FC = () => {
   // App State
@@ -35,7 +34,6 @@ const App: React.FC = () => {
   const [selectedSyllabusDept, setSelectedSyllabusDept] = useState<string>("");
   const [isScaleModalOpen, setScaleModalOpen] = useState(false);
   const [isSaveModalOpen, setSaveModalOpen] = useState(false);
-  const [isSearchModalOpen, setIsSearchModalOpen] = useState(false);
   
   // DEFAULT TO DARK MODE (true)
   const [darkMode, setDarkMode] = useState(true);
@@ -155,10 +153,6 @@ const App: React.FC = () => {
     setTerms([newTerm]);
   }, []);
 
-  const handleResultImport = useCallback((newTerm: Term) => {
-    setTerms([newTerm]);
-  }, []);
-
   const toggleDarkMode = useCallback(() => {
     setDarkMode(prev => !prev);
   }, []);
@@ -221,26 +215,16 @@ const App: React.FC = () => {
                     <p className="text-sm md:text-base text-gray-600 dark:text-gray-400 mt-1">National University Bangladesh</p>
                   </div>
                   
-                  {/* Action Buttons - Mobile First Grid */}
-                  <div className="grid grid-cols-2 gap-3 lg:flex lg:items-end lg:gap-2">
-                    <button 
-                      onClick={() => setIsSearchModalOpen(true)}
-                      className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2.5 rounded-lg text-xs md:text-sm font-semibold shadow-sm hover:shadow-md transition-all flex items-center justify-center gap-2 active:scale-95 border border-transparent"
-                    >
-                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                      </svg>
-                      Import Result
-                    </button>
-                    
+                  {/* Action Buttons */}
+                  <div className="flex justify-start lg:justify-end">
                     <button 
                       onClick={() => setScaleModalOpen(true)}
-                      className="bg-white dark:bg-gray-800 text-emerald-700 dark:text-emerald-400 border border-gray-200 dark:border-gray-700 px-4 py-2.5 rounded-lg text-xs md:text-sm font-semibold shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-all flex items-center justify-center gap-2 active:scale-95"
+                      className="bg-white dark:bg-gray-800 text-emerald-700 dark:text-emerald-400 border border-gray-200 dark:border-gray-700 px-5 py-2.5 rounded-lg text-xs md:text-sm font-semibold shadow-sm hover:bg-gray-50 dark:hover:bg-gray-700 transition-all flex items-center justify-center gap-2 active:scale-95"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                         </svg>
-                      Grading Scale
+                      View Grading Scale
                     </button>
                   </div>
                 </div>
@@ -309,14 +293,6 @@ const App: React.FC = () => {
             isOpen={isSaveModalOpen} 
             onClose={() => setSaveModalOpen(false)} 
             onSave={handleSave}
-          />
-        </Suspense>
-        
-        <Suspense fallback={null}>
-          <ResultSearchModal
-            isOpen={isSearchModalOpen}
-            onClose={() => setIsSearchModalOpen(false)}
-            onImport={handleResultImport}
           />
         </Suspense>
         

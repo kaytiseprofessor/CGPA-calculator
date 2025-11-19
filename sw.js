@@ -1,5 +1,5 @@
 
-const CACHE_NAME = 'nu-cgpa-genius-v3';
+const CACHE_NAME = 'nu-cgpa-genius-v8';
 const urlsToCache = [
   './',
   './index.html',
